@@ -130,8 +130,6 @@ export default defineComponent({
       const classes = classesRef.value
       const selected = selectedRef.value
 
-      console.log(methodRef)
-
       return (
         // <StyleThemeProvider>
         // <VJSFThemeProvider theme={theme as any}>
