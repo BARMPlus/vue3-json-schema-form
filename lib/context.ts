@@ -1,11 +1,18 @@
-import { defineComponent } from 'vue'
+import { inject } from 'vue'
 
-import { FiledPropsDefine } from './types'
+import type { CommonFieldType } from './types'
 
 export const SchemaFormContextKey = Symbol()
 
-const TypeHelperComponent = defineComponent({ props: FiledPropsDefine })
-
 export interface SchemaFormContextProps {
-  SchemaItem: typeof TypeHelperComponent
+  SchemaItem: CommonFieldType
+}
+
+export function useVJSFContext() {
+  const context = inject<SchemaFormContextProps>(
+    SchemaFormContextKey,
+    {} as SchemaFormContextProps,
+  )
+  if (!context) throw Error('SchemaForm needed')
+  return context
 }

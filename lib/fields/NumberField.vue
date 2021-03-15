@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup="props">
-import { ref } from 'vue'
 import { FiledPropsDefine, Schema } from '../types'
 
 export default {

@@ -1,18 +1,14 @@
-import { defineComponent, inject, watchEffect } from 'vue'
+import { defineComponent } from 'vue'
 
 import { FiledPropsDefine } from '../types'
-import { SchemaFormContextProps, SchemaFormContextKey } from '../context'
-import SchemaItem from '../SchemaItem'
+import { useVJSFContext } from '../context'
 import { isObject } from '../utils'
 
 export default defineComponent({
   name: 'ObjectField',
   props: FiledPropsDefine,
   setup(props) {
-    const context = inject<SchemaFormContextProps>(
-      SchemaFormContextKey,
-      {} as SchemaFormContextProps,
-    )
+    const context = useVJSFContext()
     const handleObjectFieldChange = (key: string, v: any) => {
       const value: any = isObject(props.value) ? props.value : {}
       if (v === undefined) {

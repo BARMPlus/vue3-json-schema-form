@@ -71,7 +71,7 @@ const useStyles = createUseStyles({
 
 export default defineComponent({
   setup() {
-    const selectedRef: Ref<number> = ref(0)
+    const selectedRef: Ref<number> = ref(1)
 
     const demo: {
       schema: Schema | null
