@@ -20,7 +20,8 @@ module.exports = {
     'no-prototype-builtins': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'camelcase': 'off',
-    '@typescript-eslint/camelcase': 'off'
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-empty-function':'off',
   },
   overrides: [
     {
