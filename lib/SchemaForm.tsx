@@ -1,11 +1,11 @@
 import { defineComponent, provide, reactive } from 'vue'
 
-import { Schema } from './types'
 import { SchemaFormContextKey } from './context'
 import SchemaItem from './SchemaItem'
 
 import type { PropType } from 'vue'
 import type { SchemaFormContextProps } from './context'
+import type { Schema } from './types'
 
 export default defineComponent({
   props: {

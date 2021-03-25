@@ -1,6 +1,6 @@
 import { inject } from 'vue'
 
-import type { CommonFieldType } from './types'
+import type { CommonFieldType, Theme } from './types'
 
 export const SchemaFormContextKey = Symbol()
 

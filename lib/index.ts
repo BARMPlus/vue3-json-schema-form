@@ -4,6 +4,8 @@ import SchemaFrom from './SchemaForm'
 
 export default SchemaFrom
 
+export { default as ThemeProvider } from './theme'
+
 export { default as NumberField } from './fields/NumberField'
 export { default as StringField } from './fields/StringField'
 export { default as ObjectField } from './fields/ObjectField'

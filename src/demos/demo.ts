@@ -4,5 +4,5 @@ export default {
     type: 'number',
   },
   uiSchema: {},
-  default: 'Jok',
+  default: '123456',
 }
