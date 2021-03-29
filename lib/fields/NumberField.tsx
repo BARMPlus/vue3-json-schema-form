@@ -13,9 +13,15 @@ export default defineComponent({
       props.onChange(Number.isNaN(num) ? undefined : num)
     }
     return () => {
-      const { schema, rootSchema, ...rest } = props
+      const { rootSchema, errorSchema, ...rest } = props
       const NumberWidget = NumberWidgetRef.value
-      return <NumberWidget {...rest} onChange={handleChange} />
+      return (
+        <NumberWidget
+          {...rest}
+          errors={errorSchema.__errors}
+          onChange={handleChange}
+        />
+      )
     }
   },
 })

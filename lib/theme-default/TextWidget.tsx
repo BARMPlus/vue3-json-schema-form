@@ -1,5 +1,9 @@
-import { CommonWidgetDefine, CommonWidgetPropsDefine } from '../types'
 import { defineComponent } from 'vue'
+
+import { withFormItem } from './FormItem'
+import { CommonWidgetPropsDefine } from '../types'
+
+import type { CommonWidgetDefine } from '../types'
 
 const TextWidget: CommonWidgetDefine = defineComponent({
   name: 'TextWidget',
@@ -17,4 +21,4 @@ const TextWidget: CommonWidgetDefine = defineComponent({
   },
 })
 
-export default TextWidget
+export default withFormItem(TextWidget)
