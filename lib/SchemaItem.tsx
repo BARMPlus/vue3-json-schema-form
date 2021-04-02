@@ -1,6 +1,6 @@
 import { defineComponent, computed } from 'vue'
 
-import { SchemaTypes, FiledPropsDefine } from './types'
+import { SchemaTypes, FiledPropsDefine, Schema } from './types'
 // import StringField from './fields/StringField.vue'
 // import NumberField from './fields/NumberField.vue'
 import StringField from './fields/StringField'
@@ -9,6 +9,7 @@ import ObjectField from './fields/ObjectField'
 import ArrayField from './fields/ArrayField'
 
 import { retrieveSchema } from './utils'
+import { useVJSFContext } from './context'
 
 export default defineComponent({
   name: 'SchemaItem',
@@ -16,7 +17,10 @@ export default defineComponent({
   setup(props) {
     const retrievedSchemaRef = computed(() => {
       const { schema, rootSchema, value } = props
-      return retrieveSchema(schema, rootSchema, value)
+      const formContext = useVJSFContext()
+      return formContext.transformSchemaRef(
+        retrieveSchema(schema, rootSchema, value),
+      )
     })
     return () => {
       const { schema, rootSchema, value } = props

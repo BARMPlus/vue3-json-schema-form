@@ -19,15 +19,15 @@ export default defineComponent({
       props.onChange(value)
     }
     return () => {
-      const { schema, rootSchema, value, errorSchema } = props
+      const { schema, uiSchema, rootSchema, value, errorSchema } = props
       const { SchemaItem } = context
       const properties = schema.properties || {}
       const currentValue: any = isObject(value) ? value : {}
-      console.log('errorSchema', errorSchema)
       return Object.keys(properties).map((key, index) => (
         <SchemaItem
           key={index}
           schema={properties[key]}
+          uiSchema={uiSchema.properties?.[key] || {}}
           rootSchema={rootSchema}
           value={currentValue[key]}
           errorSchema={errorSchema[key] || {}}

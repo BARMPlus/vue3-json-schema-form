@@ -6,9 +6,9 @@ import {
   watch,
   watchEffect,
   ref,
+  computed,
 } from 'vue'
 import Ajv from 'ajv'
-import ajvErrors from 'ajv-errors'
 
 import { SchemaFormContextKey } from './context'
 import SchemaItem from './SchemaItem'
@@ -17,7 +17,13 @@ import { ErrorSchema, validateFormData } from './validator'
 import type { PropType, Ref } from 'vue'
 import type { Options } from 'ajv'
 import type { SchemaFormContextProps } from './context'
-import type { Schema } from './types'
+import type {
+  CommonWidgetDefine,
+  CustomFormat,
+  CustomKeyword,
+  Schema,
+  UISchema,
+} from './types'
 
 interface ContextRef {
   doValidate: () => Promise<{
@@ -56,6 +62,15 @@ export default defineComponent({
     customValidate: {
       type: Function as PropType<(data: any, errors: any) => void>,
     },
+    customFormats: {
+      type: [Array, Object] as PropType<CustomFormat | CustomFormat[]>,
+    },
+    customKeywords: {
+      type: [Array, Object] as PropType<CustomKeyword | CustomKeyword[]>,
+    },
+    uiSchema: {
+      type: Object as PropType<UISchema>,
+    },
   },
   name: 'SchemaForm',
   setup(props, { slots, emit, attrs }) {
@@ -70,6 +85,23 @@ export default defineComponent({
         ...defaultAjvOptions,
         ...props.ajvOptions,
       })
+      if (props.customFormats) {
+        const customFormats = Array.isArray(props.customFormats)
+          ? props.customFormats
+          : [props.customFormats]
+        customFormats.forEach((format) => {
+          validatorRef.value.addFormat(format.name, format.definition)
+        })
+      }
+
+      if (props.customKeywords) {
+        const customKeywords = Array.isArray(props.customKeywords)
+          ? props.customKeywords
+          : [props.customKeywords]
+        customKeywords.forEach((keyword) =>
+          validatorRef.value.addKeyword(keyword.name, keyword.deinition as any),
+        )
+      }
     })
 
     const validateResolveRef = ref()
@@ -119,8 +151,43 @@ export default defineComponent({
       },
     )
 
+    const formatMapRef = computed(() => {
+      if (props.customFormats) {
+        const customFormats = Array.isArray(props.customFormats)
+          ? props.customFormats
+          : [props.customFormats]
+        return customFormats.reduce((result, format) => {
+          result[format.name] = format.component
+          return result
+        }, {} as { [key: string]: CommonWidgetDefine })
+      } else {
+        return {}
+      }
+    })
+
+    const transformSchemaRef = computed(() => {
+      if (props.customKeywords) {
+        const customKeywords = Array.isArray(props.customKeywords)
+          ? props.customKeywords
+          : [props.customKeywords]
+
+        return (schema: Schema) => {
+          let newSchema = schema
+          customKeywords.forEach((keyword) => {
+            if ((newSchema as any)[keyword.name]) {
+              newSchema = keyword.transformSchema(schema)
+            }
+          })
+          return newSchema
+        }
+      }
+      return (s: Schema) => s
+    })
+
     const context = reactive<SchemaFormContextProps>({
       SchemaItem,
+      formatMapRef,
+      transformSchemaRef,
     })
 
     const errorSchemaRef: Ref<ErrorSchema> = shallowRef({})
@@ -128,10 +195,11 @@ export default defineComponent({
     provide(SchemaFormContextKey, context)
 
     return () => {
-      const { schema, value } = props
+      const { schema, value, uiSchema } = props
       return (
         <SchemaItem
           schema={schema}
+          uiSchema={uiSchema || {}}
           rootSchema={schema}
           value={value}
           onChange={handleChange}

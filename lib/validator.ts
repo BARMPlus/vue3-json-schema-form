@@ -27,7 +27,7 @@ function toErrorSchema(errors: TransformErrorObject[]) {
   if (errors.length < 1) return {}
   return errors.reduce((errorSchema, error) => {
     const { property, message } = error
-    const path = toPath(property.replace(/\//g, '.')) // /obj/a -> [obj, a])
+    const path = toPath(property?.replace(/\//g, '.')) // /obj/a -> [obj, a])
     let parent = errorSchema
 
     // If the property is at the root (.level1) then toPath creates

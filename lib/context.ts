@@ -1,11 +1,19 @@
-import { inject } from 'vue'
+import { Ref, inject, ComputedRef } from 'vue'
 
-import type { CommonFieldType, Theme } from './types'
+import type { CommonFieldType } from './types'
+import type { CommonWidgetDefine, Schema } from './types'
 
 export const SchemaFormContextKey = Symbol()
 
 export interface SchemaFormContextProps {
   SchemaItem: CommonFieldType
+  formatMapRef: ComputedRef<
+    | {
+        [key: string]: CommonWidgetDefine
+      }
+    | undefined
+  >
+  transformSchemaRef: any
 }
 
 export function useVJSFContext() {
