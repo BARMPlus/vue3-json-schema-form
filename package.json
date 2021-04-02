@@ -8,7 +8,7 @@
     "build:core": "TYPE=lib vue-cli-service build --no-clean --target lib --name index lib/index.ts",
     "build:theme": "TYPE=lib vue-cli-service build --no-clean --target lib --name theme-default/index lib/theme-default/index.tsx",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:coverage": "vue-cli-service test:unit --coverage",
+    "test:unit:cov": "vue-cli-service test:unit --coverage",
     "test:unit:only:array": "vue-cli-service test:unit --coverage -t=ArrayField",
     "lint": "vue-cli-service lint"
   },
