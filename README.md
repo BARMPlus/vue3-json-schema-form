@@ -1,6 +1,6 @@
 # API 设计
 
-![Coverage](https://img.shields.io/codecov/c/gh/BARMPlusv/vue3-json-schema-form/branch/main)
+![Coverage](https://img.shields.io/codecov/c/gh/BARMPlus/vue3-json-schema-form/branch/main)
 
 ```jsx
 <JsonSchemaForm
