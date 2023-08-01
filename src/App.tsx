@@ -192,7 +192,7 @@ export default defineComponent({
                   customFormats={customFormat}
                   customKeywords={customKeyword}
                 />
-                <button onClick={validateForm}>校验</button>
+                <button onClick={validateForm}>校验2222</button>
               </ThemeProvider>
             </div>
           </div>
